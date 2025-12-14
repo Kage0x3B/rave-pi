@@ -23,9 +23,9 @@ export const SERVER_CONFIG = {
 /** Animation configuration */
 export const ANIMATION_CONFIG = {
     /** Target frames per second */
-    targetFps: 60,
+    targetFps: 30,
     /** Frame interval in milliseconds */
-    frameInterval: 1000 / 60,
+    frameInterval: 1000 / 30,
 };
 
 /** State persistence configuration */
