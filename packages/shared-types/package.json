@@ -1,0 +1,20 @@
+{
+    "name": "@ravepi/shared-types",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@ravepi/tsconfig": "workspace:*",
+        "typescript": "^5.8.3"
+    }
+}

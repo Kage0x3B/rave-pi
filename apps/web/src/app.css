@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@theme {
+    --color-primary: #a855f7;
+    --color-secondary: #ec4899;
+    --color-accent: #22d3ee;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+}
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1f1f1f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}

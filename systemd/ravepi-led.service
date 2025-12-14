@@ -1,0 +1,24 @@
+[Unit]
+Description=RavePi LED Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/ravepi/apps/led-daemon
+ExecStart=/usr/bin/node dist/index.js
+Restart=always
+RestartSec=5
+
+# Environment
+Environment=NODE_ENV=production
+
+# Security hardening (while still allowing GPIO access)
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ravepi/apps/led-daemon
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
