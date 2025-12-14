@@ -12,7 +12,7 @@ import type {
     EffectParams,
 } from '@ravepi/shared-types';
 
-const API_BASE = 'http://127.0.0.1:3001';
+const API_BASE = '/api';
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${API_BASE}${endpoint}`, {
