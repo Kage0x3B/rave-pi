@@ -1,4 +1,4 @@
-import type { EffectInfo } from '@ravepi/shared-types';
+import type { EffectInfo, EffectParams } from '@ravepi/shared-types';
 import { BaseEffect } from './types.js';
 
 const CHRISTMAS_COLORS = [
@@ -42,7 +42,7 @@ export class ChristmasEffect extends BaseEffect {
     private lastToggleTime = 0;
     private groupColors: number[] = [];
 
-    init(ledCount: number, params?: Record<string, unknown>): void {
+    init(ledCount: number, params?: EffectParams): void {
         super.init(ledCount, params);
         this.invertPattern = false;
         this.lastToggleTime = Date.now();
