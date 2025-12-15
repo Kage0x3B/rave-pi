@@ -2,8 +2,8 @@
 export const LED_CONFIG = {
     /** Number of LEDs in the strip */
     leds: 202,
-    /** GPIO pin (19 for channel 1) */
-    gpio: 19,
+    /** GPIO pin (18 for PWM0) */
+    gpio: 18,
     /** DMA channel (10 is safe) */
     dma: 10,
     /** Initial brightness (0-255) */
