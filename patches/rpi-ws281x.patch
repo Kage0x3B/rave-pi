@@ -19,3 +19,13 @@ index 2c7cf3db2be29bc2d83ac3318754f12373699df3..798db1e4e6d667f95b9330e4d924f6f9
 +  },
    "homepage": "https://github.com/meg768/rpi-ws281x#readme"
  }
+diff --git a/src/addon.cpp b/src/addon.cpp
+index 55133d321c7e612fada0aa3431311862d26a71a0..1e5e2b6cf94dacad2bfcd46df877f0246cf903b0 100755
+--- a/src/addon.cpp
++++ b/src/addon.cpp
+@@ -1,4 +1,5 @@
+ #include "addon.h"
++#include <unistd.h>
+ 
+ Addon::config_t Addon::config;
+ 

@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   rpi-ws281x:
-    hash: 0218213c124521f7bd67cc246a433271c9afe751dd8545f169d3143d55eaba8f
+    hash: 72f119be26f751b2a1c90fe0e8c83c97124ebca584a36a19465147387c53d526
     path: patches/rpi-ws281x.patch
 
 importers:
@@ -68,7 +68,7 @@ importers:
     optionalDependencies:
       rpi-ws281x:
         specifier: ^1.0.46
-        version: 1.1.53(patch_hash=0218213c124521f7bd67cc246a433271c9afe751dd8545f169d3143d55eaba8f)
+        version: 1.1.53(patch_hash=72f119be26f751b2a1c90fe0e8c83c97124ebca584a36a19465147387c53d526)
 
   apps/web:
     dependencies:
@@ -3279,7 +3279,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.53.3
       fsevents: 2.3.3
 
-  rpi-ws281x@1.1.53(patch_hash=0218213c124521f7bd67cc246a433271c9afe751dd8545f169d3143d55eaba8f):
+  rpi-ws281x@1.1.53(patch_hash=72f119be26f751b2a1c90fe0e8c83c97124ebca584a36a19465147387c53d526):
     dependencies:
       bindings: 1.5.0
       nan: 2.24.0
