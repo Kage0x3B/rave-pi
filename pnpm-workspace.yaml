@@ -4,3 +4,5 @@ packages:
 onlyBuiltDependencies:
   - esbuild
   - rpi-ws281x
+patchedDependencies:
+  rpi-ws281x: patches/rpi-ws281x.patch
