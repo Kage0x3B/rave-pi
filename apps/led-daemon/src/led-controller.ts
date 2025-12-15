@@ -99,18 +99,9 @@ export class LedController {
         return this._brightness;
     }
 
-    /** Set brightness (0-255) - requires reconfigure on real hardware */
+    /** Set brightness (0-255) - applied via software scaling in render() */
     set brightness(value: number) {
         this._brightness = Math.max(0, Math.min(255, value));
-
-        // Reconfigure to apply brightness
-        this.ws281x.configure({
-            leds: LED_CONFIG.leds,
-            gpio: LED_CONFIG.gpio,
-            dma: LED_CONFIG.dma,
-            brightness: this._brightness,
-            stripType: LED_CONFIG.stripType,
-        });
     }
 
     /** Set a single pixel color (0xRRGGBB) */
@@ -137,9 +128,22 @@ export class LedController {
         return this.pixels;
     }
 
-    /** Render current pixel buffer to hardware */
+    /** Render current pixel buffer to hardware (applies software brightness scaling) */
     render(): void {
-        this.ws281x.render(this.pixels);
+        if (this._brightness === 255) {
+            this.ws281x.render(this.pixels);
+        } else {
+            const scaled = new Uint32Array(this.ledCount);
+            const scale = this._brightness / 255;
+            for (let i = 0; i < this.ledCount; i++) {
+                const pixel = this.pixels[i];
+                const r = Math.round(((pixel >> 16) & 0xff) * scale);
+                const g = Math.round(((pixel >> 8) & 0xff) * scale);
+                const b = Math.round((pixel & 0xff) * scale);
+                scaled[i] = (r << 16) | (g << 8) | b;
+            }
+            this.ws281x.render(scaled);
+        }
     }
 
     /** Turn off all LEDs and reset */
