@@ -1,6 +1,7 @@
 <script lang="ts">
     import { ledStore } from '$lib/stores/led.svelte';
     import type { ParamSchema, RgbColor } from '@ravepi/shared-types';
+    import { Switch, Slider } from '@skeletonlabs/skeleton-svelte';
 
     let localParams = $state<Record<string, unknown>>({});
     let debounceTimers: Record<string, ReturnType<typeof setTimeout>> = {};
@@ -10,11 +11,10 @@
         localParams = { ...ledStore.state.effectParams };
     });
 
-    function handleNumberInput(param: ParamSchema, e: Event) {
+    function handleNumberChange(param: ParamSchema, details: { value: number[] }) {
         if (param.type !== 'number') return;
 
-        const target = e.target as HTMLInputElement;
-        const value = parseFloat(target.value);
+        const value = details.value[0];
         localParams[param.name] = value;
 
         // Debounce API calls
@@ -24,13 +24,11 @@
         }, 100);
     }
 
-    function handleBooleanInput(param: ParamSchema, e: Event) {
+    function handleBooleanChange(param: ParamSchema, details: { checked: boolean }) {
         if (param.type !== 'boolean') return;
 
-        const target = e.target as HTMLInputElement;
-        const value = target.checked;
-        localParams[param.name] = value;
-        ledStore.setEffectParams({ [param.name]: value });
+        localParams[param.name] = details.checked;
+        ledStore.setEffectParams({ [param.name]: details.checked });
     }
 
     function handleSelectInput(param: ParamSchema, e: Event) {
@@ -81,43 +79,43 @@
 
 {#if hasParams && currentEffect}
     <div class="flex flex-col gap-4">
-        <span class="text-lg font-semibold">Effect Settings</span>
+        <span class="text-lg font-semibold text-surface-100">Effect Settings</span>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {#each currentEffect.params as param}
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text font-medium">{param.label}</span>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-surface-200">{param.label}</span>
                         {#if param.description}
-                            <span class="label-text-alt text-base-content/60">{param.description}</span>
+                            <span class="text-xs text-surface-400">{param.description}</span>
                         {/if}
-                    </label>
+                    </div>
 
                     {#if param.type === 'number'}
-                        <div class="flex items-center gap-2">
-                            <input
-                                type="range"
-                                min={param.min}
-                                max={param.max}
-                                step={param.step ?? 1}
-                                value={getParamValue(param.name, param.default) as number}
-                                oninput={(e) => handleNumberInput(param, e)}
-                                class="range range-sm range-secondary flex-1"
-                            />
-                            <span class="badge badge-outline w-16 justify-center">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-1">
+                                <Slider
+                                    name={param.name}
+                                    value={[getParamValue(param.name, param.default) as number]}
+                                    onValueChange={(details) => handleNumberChange(param, details)}
+                                    min={param.min}
+                                    max={param.max}
+                                    step={param.step ?? 1}
+                                />
+                            </div>
+                            <span class="badge badge-outline w-16 text-center">
                                 {getParamValue(param.name, param.default)}
                             </span>
                         </div>
                     {:else if param.type === 'boolean'}
-                        <input
-                            type="checkbox"
+                        <Switch
+                            name={param.name}
                             checked={getParamValue(param.name, param.default) as boolean}
-                            onchange={(e) => handleBooleanInput(param, e)}
-                            class="toggle toggle-secondary"
+                            onCheckedChange={(details) => handleBooleanChange(param, details)}
                         />
                     {:else if param.type === 'select'}
                         <select
-                            class="select select-bordered select-sm"
+                            class="select"
                             value={getParamValue(param.name, param.default) as string}
                             onchange={(e) => handleSelectInput(param, e)}
                         >
@@ -130,7 +128,7 @@
                             type="color"
                             value={rgbToHex(getParamValue(param.name, param.default) as RgbColor)}
                             onchange={(e) => handleColorInput(param, e)}
-                            class="w-full h-10 rounded cursor-pointer"
+                            class="w-full h-10 rounded-lg cursor-pointer border-2 border-surface-600 bg-transparent"
                         />
                     {/if}
                 </div>

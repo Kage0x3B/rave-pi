@@ -21,14 +21,15 @@
 </script>
 
 <div class="flex flex-col gap-4">
-    <span class="text-lg font-semibold">Effect</span>
+    <span class="text-lg font-semibold text-surface-100">Effect</span>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
         {#each ledStore.effects as effect}
             <button
-                class="btn btn-lg flex flex-col h-auto py-4 {ledStore.state.effect === effect.name
-                    ? 'btn-primary'
-                    : 'btn-ghost bg-base-200'}"
+                class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl transition-all duration-200
+                    {ledStore.state.effect === effect.name
+                        ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25'
+                        : 'bg-surface-700/50 text-surface-200 hover:bg-surface-600/50'}"
                 onclick={() => selectEffect(effect.name)}
             >
                 <span class="text-2xl">{effectIcons[effect.name] || '🎯'}</span>

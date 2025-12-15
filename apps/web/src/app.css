@@ -1,14 +1,10 @@
 @import 'tailwindcss';
-@plugin 'daisyui';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/themes/wintry';
 
-@theme {
-    --color-primary: #a855f7;
-    --color-secondary: #ec4899;
-    --color-accent: #22d3ee;
-}
-
+/* Custom dark theme overrides */
 :root {
-    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #111118 50%, #0d0d12 100%);
 }
 
 body {
@@ -32,4 +28,69 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #5a5a5a;
+}
+
+/* Card styling */
+.card {
+    @apply rounded-xl p-6 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50;
+}
+
+/* Custom button styles */
+.btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+}
+
+.btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white;
+}
+
+.btn-ghost {
+    @apply bg-transparent hover:bg-surface-700/50 text-surface-100;
+}
+
+.btn-sm {
+    @apply px-3 py-1.5 text-sm;
+}
+
+.btn-lg {
+    @apply px-6 py-3 text-lg;
+}
+
+/* Badge styling */
+.badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.badge-success {
+    @apply bg-success-500/20 text-success-400;
+}
+
+.badge-error {
+    @apply bg-error-500/20 text-error-400;
+}
+
+.badge-primary {
+    @apply bg-primary-500/20 text-primary-400;
+}
+
+.badge-neutral {
+    @apply bg-surface-600/50 text-surface-300;
+}
+
+.badge-outline {
+    @apply bg-transparent border border-surface-600 text-surface-300;
+}
+
+/* Input styling */
+.input {
+    @apply px-3 py-2 rounded-lg bg-surface-800 border border-surface-600 text-surface-100 focus:outline-none focus:ring-2 focus:ring-primary-500/50;
+}
+
+.input-sm {
+    @apply px-2 py-1.5 text-sm;
+}
+
+/* Select */
+.select {
+    @apply px-3 py-2 rounded-lg bg-surface-800 border border-surface-600 text-surface-100 focus:outline-none focus:ring-2 focus:ring-primary-500/50;
 }

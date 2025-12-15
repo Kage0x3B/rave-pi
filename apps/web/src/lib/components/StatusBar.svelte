@@ -12,22 +12,22 @@
     }
 </script>
 
-<div class="navbar bg-base-200 rounded-box shadow-lg">
-    <div class="flex-1">
-        <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+<nav class="flex items-center justify-between rounded-xl bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 px-4 py-3">
+    <div class="flex items-center gap-2">
+        <span class="text-xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
             RavePi
         </span>
     </div>
-    <div class="flex-none gap-4">
+    <div class="flex items-center gap-3">
         {#if ledStore.status}
-            <div class="badge badge-outline gap-1">
-                <span class="text-success">●</span>
+            <div class="badge badge-outline gap-1.5">
+                <span class="text-success-400">●</span>
                 {ledStore.status.ledCount} LEDs
             </div>
             <div class="badge badge-outline">
                 {ledStore.status.fps} FPS
             </div>
-            <div class="badge badge-outline">
+            <div class="badge badge-outline hidden sm:flex">
                 {formatUptime(ledStore.status.uptime)}
             </div>
         {/if}
@@ -35,4 +35,4 @@
             {ledStore.connected ? 'Connected' : 'Disconnected'}
         </div>
     </div>
-</div>
+</nav>

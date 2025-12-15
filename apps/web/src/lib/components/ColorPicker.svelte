@@ -70,7 +70,7 @@
 </script>
 
 <div class="flex flex-col gap-4">
-    <span class="text-lg font-semibold">Color</span>
+    <span class="text-lg font-semibold text-surface-100">Color</span>
 
     <!-- Color picker -->
     <div class="flex items-center gap-4">
@@ -78,47 +78,51 @@
             type="color"
             value={hexColor}
             onchange={handleColorChange}
-            class="w-16 h-16 rounded-lg cursor-pointer border-2 border-base-content/20"
+            class="w-16 h-16 rounded-lg cursor-pointer border-2 border-surface-600 bg-transparent"
+            aria-label="Color picker"
         />
         <div
-            class="w-16 h-16 rounded-lg border-2 border-base-content/20"
+            class="w-16 h-16 rounded-lg border-2 border-surface-600"
             style="background-color: {hexColor}"
         ></div>
     </div>
 
-    <!-- RGB sliders -->
+    <!-- RGB inputs -->
     <div class="grid grid-cols-3 gap-2">
         <div class="flex flex-col">
-            <label class="text-xs text-error font-semibold">R</label>
+            <label for="color-r" class="text-xs text-error-400 font-semibold mb-1">R</label>
             <input
+                id="color-r"
                 type="number"
                 min="0"
                 max="255"
                 value={localColor.r}
                 oninput={(e) => handleRgbInput('r', e)}
-                class="input input-sm input-bordered w-full"
+                class="input input-sm w-full"
             />
         </div>
         <div class="flex flex-col">
-            <label class="text-xs text-success font-semibold">G</label>
+            <label for="color-g" class="text-xs text-success-400 font-semibold mb-1">G</label>
             <input
+                id="color-g"
                 type="number"
                 min="0"
                 max="255"
                 value={localColor.g}
                 oninput={(e) => handleRgbInput('g', e)}
-                class="input input-sm input-bordered w-full"
+                class="input input-sm w-full"
             />
         </div>
         <div class="flex flex-col">
-            <label class="text-xs text-info font-semibold">B</label>
+            <label for="color-b" class="text-xs text-tertiary-400 font-semibold mb-1">B</label>
             <input
+                id="color-b"
                 type="number"
                 min="0"
                 max="255"
                 value={localColor.b}
                 oninput={(e) => handleRgbInput('b', e)}
-                class="input input-sm input-bordered w-full"
+                class="input input-sm w-full"
             />
         </div>
     </div>
@@ -127,7 +131,7 @@
     <div class="flex flex-wrap gap-2">
         {#each presets as preset}
             <button
-                class="w-8 h-8 rounded-full border-2 border-base-content/20 hover:scale-110 transition-transform"
+                class="w-8 h-8 rounded-full border-2 border-surface-600 hover:scale-110 hover:border-surface-400 transition-all"
                 style="background-color: rgb({preset.r}, {preset.g}, {preset.b})"
                 onclick={() => selectPreset(preset)}
                 title="RGB({preset.r}, {preset.g}, {preset.b})"

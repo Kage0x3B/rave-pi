@@ -1,18 +1,18 @@
 <script lang="ts">
     import { ledStore } from '$lib/stores/led.svelte';
+    import { Switch } from '@skeletonlabs/skeleton-svelte';
 
-    function toggle() {
-        ledStore.setPower(!ledStore.state.power);
+    function toggle(details: { checked: boolean }) {
+        ledStore.setPower(details.checked);
     }
 </script>
 
 <div class="flex items-center gap-4">
-    <span class="text-lg font-semibold">Power</span>
-    <input
-        type="checkbox"
-        class="toggle toggle-lg toggle-primary"
+    <span class="text-lg font-semibold text-surface-100">Power</span>
+    <Switch
+        name="power"
         checked={ledStore.state.power}
-        onchange={toggle}
+        onCheckedChange={toggle}
     />
     <span class="badge {ledStore.state.power ? 'badge-success' : 'badge-neutral'}">
         {ledStore.state.power ? 'ON' : 'OFF'}
