@@ -1,4 +1,16 @@
+import { readFileSync } from 'fs';
 import { LED_CONFIG } from './config.js';
+
+/** Check if running on a Raspberry Pi */
+function isRaspberryPi(): boolean {
+    if (process.platform !== 'linux') return false;
+    try {
+        const model = readFileSync('/sys/firmware/devicetree/base/model', 'utf8');
+        return model.includes('Raspberry Pi');
+    } catch {
+        return false;
+    }
+}
 
 /** Interface matching rpi-ws281x */
 interface Ws281x {
@@ -80,15 +92,21 @@ export class LedController {
         let ws281x: Ws281x;
         let isMock: boolean;
 
-        try {
-            const module = await import('rpi-ws281x');
-            ws281x = module.default as Ws281x;
-            isMock = false;
-            console.log('[LED] Using real rpi-ws281x hardware driver');
-        } catch {
+        if (!isRaspberryPi()) {
             ws281x = new MockLedController();
             isMock = true;
-            console.log('[LED] Hardware unavailable, using mock controller');
+            console.log('[LED] Not a Raspberry Pi, using mock controller');
+        } else {
+            try {
+                const module = await import('rpi-ws281x');
+                ws281x = module.default as Ws281x;
+                isMock = false;
+                console.log('[LED] Using real rpi-ws281x hardware driver');
+            } catch (err) {
+                ws281x = new MockLedController();
+                isMock = true;
+                console.log('[LED] Failed to load rpi-ws281x, using mock controller:', err);
+            }
         }
 
         return new LedController(ws281x, isMock);
