@@ -58,25 +58,12 @@ export class LedController {
     public readonly ledCount: number;
     public readonly isMock: boolean;
 
-    constructor() {
+    private constructor(ws281x: Ws281x, isMock: boolean) {
         this.ledCount = LED_CONFIG.leds;
         this.pixels = new Uint32Array(this.ledCount);
         this._brightness = LED_CONFIG.brightness;
-
-        // Try to load real hardware driver
-        let realWs281x: Ws281x | null = null;
-        try {
-            // Dynamic import for optional dependency
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            realWs281x = require('rpi-ws281x') as Ws281x;
-            this.isMock = false;
-            console.log('[LED] Using real rpi-ws281x hardware driver');
-        } catch {
-            this.isMock = true;
-            console.log('[LED] Hardware unavailable, using mock controller');
-        }
-
-        this.ws281x = realWs281x ?? new MockLedController();
+        this.ws281x = ws281x;
+        this.isMock = isMock;
 
         // Configure the strip
         this.ws281x.configure({
@@ -86,6 +73,25 @@ export class LedController {
             brightness: LED_CONFIG.brightness,
             stripType: LED_CONFIG.stripType,
         });
+    }
+
+    /** Initialize and create a new LedController instance */
+    static async init(): Promise<LedController> {
+        let ws281x: Ws281x;
+        let isMock: boolean;
+
+        try {
+            const module = await import('rpi-ws281x');
+            ws281x = module.default as Ws281x;
+            isMock = false;
+            console.log('[LED] Using real rpi-ws281x hardware driver');
+        } catch {
+            ws281x = new MockLedController();
+            isMock = true;
+            console.log('[LED] Hardware unavailable, using mock controller');
+        }
+
+        return new LedController(ws281x, isMock);
     }
 
     /** Get current brightness (0-255) */

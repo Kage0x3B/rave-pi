@@ -12,7 +12,7 @@ async function main() {
     // Initialize components
     console.log('\n[Init] Starting components...');
 
-    const controller = new LedController();
+    const controller = await LedController.init();
     console.log(`[Init] LED Controller: ${controller.ledCount} LEDs, mock=${controller.isMock}`);
 
     const state = new StateManager();
