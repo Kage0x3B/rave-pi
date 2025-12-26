@@ -1,6 +1,7 @@
 import { ANIMATION_CONFIG } from './config.js';
 import type { LedController } from './led-controller.js';
 import type { Effect } from './effect-types.js';
+import type { EffectParams } from '@ravepi/shared-types';
 
 /**
  * Render loop for LED animations.
@@ -51,14 +52,14 @@ export class RenderLoop {
     }
 
     /** Set the current effect */
-    setEffect(effect: Effect): void {
+    setEffect(effect: Effect, params?: EffectParams): void {
         // Dispose old effect
         if (this.effect) {
             this.effect.dispose();
         }
 
         this.effect = effect;
-        this.effect.init(this.controller.ledCount);
+        this.effect.init(this.controller.ledCount, params);
         console.log(`[RenderLoop] Effect set: ${effect.info.name}`);
     }
 

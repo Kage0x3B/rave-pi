@@ -33,7 +33,7 @@ async function main() {
     if (effects.setEffect(savedState.effect, savedState.effectParams)) {
         const effect = effects.getCurrent();
         if (effect) {
-            renderLoop.setEffect(effect);
+            renderLoop.setEffect(effect, savedState.effectParams);
         }
     } else {
         // Fallback to solid if saved effect not found

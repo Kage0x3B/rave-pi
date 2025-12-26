@@ -139,7 +139,7 @@ export async function createServer(deps: ServerDeps) {
         state.setEffect(name, sanitizedParams);
         const effect = effects.getCurrent();
         if (effect) {
-            renderLoop.setEffect(effect);
+            renderLoop.setEffect(effect, sanitizedParams);
         }
 
         return { ok: true };
@@ -188,7 +188,7 @@ export async function createServer(deps: ServerDeps) {
 
         const effect = effects.getCurrent();
         if (effect) {
-            renderLoop.setEffect(effect);
+            renderLoop.setEffect(effect, sanitizedParams);
         }
 
         return { ok: true };
