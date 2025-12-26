@@ -5,17 +5,21 @@
 	let localParams = $state<Record<string, unknown>>({});
 	let debounceTimers: Record<string, ReturnType<typeof setTimeout>> = {};
 	let lastEffectName = $state<string | null>(null);
+	let lastParamsRef = $state<Record<string, unknown> | null>(null);
 
 	const currentEffect = $derived(ledStore.currentEffect);
 	const hasParams = $derived(currentEffect && currentEffect.params.length > 0);
 
-	// Only sync local params when effect changes, not on every poll
+	// Sync local params when effect changes OR when effectParams object is replaced (e.g., scene applied)
 	$effect(() => {
 		const effectName = ledStore.state.effect;
-		if (effectName !== lastEffectName) {
+		const storeParams = ledStore.state.effectParams;
+
+		// Sync if effect changed or if params object was replaced (different reference)
+		if (effectName !== lastEffectName || storeParams !== lastParamsRef) {
 			lastEffectName = effectName;
-			// Reset local params when effect changes
-			localParams = { ...ledStore.state.effectParams };
+			lastParamsRef = storeParams;
+			localParams = { ...storeParams };
 		}
 	});
 

@@ -36,13 +36,17 @@ export abstract class BaseEffect implements Effect {
     init(ledCount: number, params?: EffectParams): void {
         this.ledCount = ledCount;
         this.pixels = new Uint32Array(ledCount);
+        // Always start with defaults from schema
+        this.params = {};
+        for (const param of this.info.params) {
+            this.params[param.name] = param.default;
+        }
+        // Then overlay any provided params
         if (params) {
-            this.params = { ...params };
-        } else {
-            // Set defaults from schema
-            this.params = {};
-            for (const param of this.info.params) {
-                this.params[param.name] = param.default;
+            for (const [key, value] of Object.entries(params)) {
+                if (value !== undefined) {
+                    this.params[key] = value;
+                }
             }
         }
     }
