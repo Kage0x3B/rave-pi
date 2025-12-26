@@ -1,7 +1,6 @@
 <script lang="ts">
     import PowerToggle from '$lib/components/PowerToggle.svelte';
     import BrightnessSlider from '$lib/components/BrightnessSlider.svelte';
-    import ColorPicker from '$lib/components/ColorPicker.svelte';
     import EffectSelector from '$lib/components/EffectSelector.svelte';
     import EffectParams from '$lib/components/EffectParams.svelte';
     import SceneManager from '$lib/components/SceneManager.svelte';
@@ -18,11 +17,6 @@
                 <BrightnessSlider />
             </div>
         </div>
-    </div>
-
-    <!-- Color Card -->
-    <div class="card">
-        <ColorPicker />
     </div>
 
     <!-- Effects Card -->

@@ -1,5 +1,8 @@
 import type { RgbColor } from './color.js';
 
+/** RGB color as a tuple [r, g, b] where each value is 0-255 */
+export type RgbTuple = [number, number, number];
+
 /** Parameter types for effect configuration */
 export type ParamType = 'number' | 'color' | 'boolean' | 'select';
 
@@ -19,10 +22,13 @@ export interface NumberParamSchema extends BaseParamSchema {
     step?: number;
 }
 
-/** Color parameter */
+/** Color parameter - stored as array of RGB tuples */
 export interface ColorParamSchema extends BaseParamSchema {
     type: 'color';
-    default: RgbColor;
+    /** Default colors - array of [r, g, b] tuples */
+    default: RgbTuple[];
+    /** Allow user to add/remove multiple colors */
+    multipleColors?: boolean;
 }
 
 /** Boolean parameter */
@@ -42,7 +48,7 @@ export interface SelectParamSchema extends BaseParamSchema {
 export type ParamSchema = NumberParamSchema | ColorParamSchema | BooleanParamSchema | SelectParamSchema;
 
 /** Effect parameter values (runtime) */
-export type EffectParams = Record<string, number | RgbColor | boolean | string>;
+export type EffectParams = Record<string, number | RgbTuple[] | boolean | string>;
 
 /** Effect metadata for UI display */
 export interface EffectInfo {
@@ -64,7 +70,15 @@ export const BUILTIN_EFFECTS = [
     'plasma',
     'theater-chase',
     'comet',
-    'sparkle',
+    'sparkle'
 ] as const;
 
 export type BuiltinEffectName = (typeof BUILTIN_EFFECTS)[number];
+
+/** Effect info with JS source code for browser execution */
+export interface EffectWithSource extends EffectInfo {
+    /** The JavaScript source code of the effect */
+    source: string;
+    /** Whether this is a built-in effect (cannot be edited) */
+    isBuiltin: boolean;
+}

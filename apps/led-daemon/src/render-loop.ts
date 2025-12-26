@@ -1,6 +1,6 @@
 import { ANIMATION_CONFIG } from './config.js';
 import type { LedController } from './led-controller.js';
-import type { Effect } from './effects/types.js';
+import type { Effect } from './effect-types.js';
 
 /**
  * Render loop for LED animations.

@@ -4,6 +4,7 @@ export { isRgbColor, isHslColor, hslToRgb, rgbToHsl, rgbToInt, intToRgb } from '
 
 // Effect types
 export type {
+    RgbTuple,
     ParamType,
     ParamSchema,
     NumberParamSchema,
@@ -12,9 +13,14 @@ export type {
     SelectParamSchema,
     EffectParams,
     EffectInfo,
-    BuiltinEffectName,
+    EffectWithSource,
+    BuiltinEffectName
 } from './effects.js';
 export { BUILTIN_EFFECTS } from './effects.js';
+
+// Effect base class and interface
+export type { Effect } from './effect-base.js';
+export { BaseEffect } from './effect-base.js';
 
 // State types
 export type { LedState, DaemonStatus } from './state.js';
@@ -26,10 +32,11 @@ export type {
     SetColorRequest,
     SetEffectRequest,
     SaveSceneRequest,
+    SaveEffectRequest,
     ApiResponse,
     HealthResponse,
     StateResponse,
     EffectsResponse,
     ScenesResponse,
-    Scene,
+    Scene
 } from './api.js';

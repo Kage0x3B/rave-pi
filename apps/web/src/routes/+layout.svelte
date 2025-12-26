@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { ledStore } from '$lib/stores/led.svelte';
     import StatusBar from '$lib/components/StatusBar.svelte';
-    import { ProgressRing } from '@skeletonlabs/skeleton-svelte';
+    import { Progress } from '@skeletonlabs/skeleton-svelte';
 
     let { children } = $props();
 
@@ -24,7 +24,7 @@
     <main class="flex-1 p-4">
         {#if ledStore.loading}
             <div class="flex items-center justify-center h-64">
-                <ProgressRing size="size-12" meterStroke="stroke-primary-500" trackStroke="stroke-surface-700" />
+                <Progress value={null} size="size-12" meterStroke="stroke-primary-500" trackStroke="stroke-surface-700" />
             </div>
         {:else if ledStore.error && !ledStore.connected}
             <div class="card bg-error-500/10 border-error-500/30">

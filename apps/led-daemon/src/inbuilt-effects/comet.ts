@@ -1,12 +1,25 @@
 import type { EffectInfo } from '@ravepi/shared-types';
-import { BaseEffect } from './types.js';
+import { BaseEffect } from '../effect-types.js';
 
 export class CometEffect extends BaseEffect {
     readonly info: EffectInfo = {
         name: 'comet',
         label: 'Comet',
         description: 'Moving comet with fading tail',
+        icon: '☄️',
         params: [
+            {
+                name: 'color',
+                label: 'Color',
+                type: 'color',
+                default: [[255, 0, 100]]
+            },
+            {
+                name: 'backgroundColor',
+                label: 'Background',
+                type: 'color',
+                default: [[0, 0, 0]]
+            },
             {
                 name: 'speed',
                 label: 'Speed',
@@ -15,7 +28,7 @@ export class CometEffect extends BaseEffect {
                 min: 0.5,
                 max: 10,
                 step: 0.5,
-                description: 'Comet speed',
+                description: 'Comet speed'
             },
             {
                 name: 'tailLength',
@@ -25,22 +38,25 @@ export class CometEffect extends BaseEffect {
                 min: 5,
                 max: 50,
                 step: 1,
-                description: 'Length of the tail',
+                description: 'Length of the tail'
             },
             {
                 name: 'bounce',
                 label: 'Bounce',
                 type: 'boolean',
                 default: true,
-                description: 'Bounce back or wrap around',
-            },
-        ],
+                description: 'Bounce back or wrap around'
+            }
+        ]
     };
 
     private position = 0;
     private direction = 1;
 
     tick(): Uint32Array {
+        const [cr, cg, cb] = this.getColor('color');
+        const [bgR, bgG, bgB] = this.getColor('backgroundColor');
+        const bgColor = this.rgbToInt(bgR, bgG, bgB);
         const speed = this.getNumber('speed', 2);
         const tailLength = Math.floor(this.getNumber('tailLength', 20));
         const bounce = this.getBoolean('bounce', true);
@@ -63,8 +79,8 @@ export class CometEffect extends BaseEffect {
             }
         }
 
-        // Clear pixels
-        this.pixels.fill(0);
+        // Fill with background color
+        this.pixels.fill(bgColor);
 
         // Draw comet head and tail
         const headPos = Math.floor(this.position);
@@ -73,11 +89,11 @@ export class CometEffect extends BaseEffect {
             const pixelPos = headPos - i * this.direction;
 
             if (pixelPos >= 0 && pixelPos < this.ledCount) {
-                // Fade from head to tail
-                const brightness = 1 - i / tailLength;
-                const r = Math.round(this.color.r * brightness);
-                const g = Math.round(this.color.g * brightness);
-                const b = Math.round(this.color.b * brightness);
+                // Fade from comet color to background color
+                const t = i / tailLength;
+                const r = Math.round(cr + (bgR - cr) * t);
+                const g = Math.round(cg + (bgG - cg) * t);
+                const b = Math.round(cb + (bgB - cb) * t);
                 this.pixels[pixelPos] = this.rgbToInt(r, g, b);
             }
         }
@@ -85,3 +101,5 @@ export class CometEffect extends BaseEffect {
         return this.pixels;
     }
 }
+
+export default CometEffect;

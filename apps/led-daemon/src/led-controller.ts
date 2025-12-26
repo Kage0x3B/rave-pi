@@ -14,13 +14,7 @@ function isRaspberryPi(): boolean {
 
 /** Interface matching rpi-ws281x */
 interface Ws281x {
-    configure(options: {
-        leds: number;
-        gpio?: number;
-        dma?: number;
-        brightness?: number;
-        stripType?: string;
-    }): void;
+    configure(options: { leds: number; gpio?: number; dma?: number; brightness?: number; stripType?: string }): void;
     render(pixels: Uint32Array): void;
     reset(): void;
 }
@@ -83,7 +77,7 @@ export class LedController {
             gpio: LED_CONFIG.gpio,
             dma: LED_CONFIG.dma,
             brightness: LED_CONFIG.brightness,
-            stripType: LED_CONFIG.stripType,
+            stripType: LED_CONFIG.stripType
         });
     }
 

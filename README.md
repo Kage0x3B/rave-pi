@@ -115,36 +115,36 @@ ravepi/
 
 The LED daemon exposes a REST API on port 3001:
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Daemon status, uptime, FPS |
-| `/state` | GET | Current LED state |
-| `/effects` | GET | Available effects with parameters |
-| `/scenes` | GET | Saved scenes |
-| `/power` | POST | `{ "on": true }` |
-| `/brightness` | POST | `{ "value": 0-255 }` |
-| `/color` | POST | `{ "r": 0-255, "g": 0-255, "b": 0-255 }` |
-| `/effect` | POST | `{ "name": "rainbow", "params": {...} }` |
-| `/effect/params` | PATCH | `{ "params": {...} }` |
-| `/scenes` | POST | `{ "name": "My Scene" }` |
-| `/scenes/apply` | POST | `{ "id": "uuid" }` |
-| `/scenes/:id` | DELETE | Delete a scene |
+| Endpoint         | Method | Description                              |
+| ---------------- | ------ | ---------------------------------------- |
+| `/health`        | GET    | Daemon status, uptime, FPS               |
+| `/state`         | GET    | Current LED state                        |
+| `/effects`       | GET    | Available effects with parameters        |
+| `/scenes`        | GET    | Saved scenes                             |
+| `/power`         | POST   | `{ "on": true }`                         |
+| `/brightness`    | POST   | `{ "value": 0-255 }`                     |
+| `/color`         | POST   | `{ "r": 0-255, "g": 0-255, "b": 0-255 }` |
+| `/effect`        | POST   | `{ "name": "rainbow", "params": {...} }` |
+| `/effect/params` | PATCH  | `{ "params": {...} }`                    |
+| `/scenes`        | POST   | `{ "name": "My Scene" }`                 |
+| `/scenes/apply`  | POST   | `{ "id": "uuid" }`                       |
+| `/scenes/:id`    | DELETE | Delete a scene                           |
 
 ## Effects
 
-| Effect | Description | Parameters |
-|--------|-------------|------------|
-| Solid | Single color | — |
-| Rainbow | Cycling colors | speed, spread |
-| Breathing | Pulsing brightness | speed, minBrightness |
-| Color Wipe | Sequential fill | speed |
-| Strobe | Flashing | frequency, dutyCycle |
-| Fire | Flame simulation | cooling, sparking |
-| Plasma | Psychedelic waves | speed, scale |
-| Theater Chase | Marquee lights | speed, spacing, rainbow |
-| Comet | Moving trail | speed, tailLength, bounce |
-| Sparkle | Random twinkles | density, fadeSpeed, colorful |
-| Christmas | Festive alternating groups | speed, groupSize |
+| Effect        | Description                | Parameters                   |
+| ------------- | -------------------------- | ---------------------------- |
+| Solid         | Single color               | —                            |
+| Rainbow       | Cycling colors             | speed, spread                |
+| Breathing     | Pulsing brightness         | speed, minBrightness         |
+| Color Wipe    | Sequential fill            | speed                        |
+| Strobe        | Flashing                   | frequency, dutyCycle         |
+| Fire          | Flame simulation           | cooling, sparking            |
+| Plasma        | Psychedelic waves          | speed, scale                 |
+| Theater Chase | Marquee lights             | speed, spacing, rainbow      |
+| Comet         | Moving trail               | speed, tailLength, bounce    |
+| Sparkle       | Random twinkles            | density, fadeSpeed, colorful |
+| Christmas     | Festive alternating groups | speed, groupSize             |
 
 ## Hardware Configuration
 
@@ -152,11 +152,11 @@ Edit `apps/led-daemon/src/config.ts`:
 
 ```typescript
 export const LED_CONFIG = {
-    leds: 202,           // Number of LEDs
-    gpio: 19,            // GPIO pin
-    dma: 10,             // DMA channel
-    brightness: 255,     // Default brightness
-    stripType: 'grb',    // Color order (grb for WS2812B)
+    leds: 202, // Number of LEDs
+    gpio: 19, // GPIO pin
+    dma: 10, // DMA channel
+    brightness: 255, // Default brightness
+    stripType: 'grb' // Color order (grb for WS2812B)
 };
 ```
 

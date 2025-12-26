@@ -7,11 +7,14 @@ export default defineConfig({
     server: {
         host: true,
         port: 5229,
-        strictPort: true,
+        strictPort: true
     },
     preview: {
         host: true,
         port: 5229,
-        strictPort: true,
+        strictPort: true
     },
+    optimizeDeps: {
+        include: ['monaco-editor']
+    }
 });

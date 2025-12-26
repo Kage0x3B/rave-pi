@@ -10,14 +10,14 @@ export default tseslint.config(
     {
         languageOptions: {
             globals: {
-                ...globals.node,
-            },
+                ...globals.node
+            }
         },
         rules: {
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-        },
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+        }
     },
     {
-        ignores: ['**/dist/**', '**/node_modules/**', '**/.svelte-kit/**', '**/build/**'],
+        ignores: ['**/dist/**', '**/node_modules/**', '**/.svelte-kit/**', '**/build/**']
     }
 );

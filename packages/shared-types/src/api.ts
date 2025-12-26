@@ -1,5 +1,5 @@
 import type { RgbColor } from './color.js';
-import type { EffectInfo, EffectParams } from './effects.js';
+import type { EffectParams, EffectWithSource } from './effects.js';
 import type { DaemonStatus, LedState } from './state.js';
 
 // ============ Request Types ============
@@ -29,6 +29,11 @@ export interface SaveSceneRequest {
     name: string;
 }
 
+export interface SaveEffectRequest {
+    /** JavaScript source code of the effect */
+    source: string;
+}
+
 // ============ Response Types ============
 
 export interface ApiResponse<T = void> {
@@ -42,7 +47,7 @@ export interface HealthResponse extends DaemonStatus {}
 export interface StateResponse extends LedState {}
 
 export interface EffectsResponse {
-    effects: EffectInfo[];
+    effects: EffectWithSource[];
 }
 
 export interface ScenesResponse {

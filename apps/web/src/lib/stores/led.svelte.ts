@@ -1,4 +1,4 @@
-import type { LedState, EffectInfo, Scene, RgbColor, EffectParams, DaemonStatus } from '@ravepi/shared-types';
+import type { LedState, EffectWithSource, Scene, RgbColor, EffectParams, DaemonStatus } from '@ravepi/shared-types';
 import { api } from '$lib/api/client';
 
 /** LED state store using Svelte 5 runes */
@@ -9,10 +9,10 @@ class LedStore {
         brightness: 255,
         color: { r: 255, g: 0, b: 100 },
         effect: 'solid',
-        effectParams: {},
+        effectParams: {}
     });
 
-    effects = $state<EffectInfo[]>([]);
+    effects = $state<EffectWithSource[]>([]);
     scenes = $state<Scene[]>([]);
     status = $state<DaemonStatus | null>(null);
 
@@ -40,7 +40,7 @@ class LedStore {
                 api.getState(),
                 api.getEffects(),
                 api.getScenes(),
-                api.getHealth(),
+                api.getHealth()
             ]);
 
             this.state = stateRes;
@@ -171,7 +171,7 @@ class LedStore {
     }
 
     /** Get current effect info */
-    get currentEffect(): EffectInfo | undefined {
+    get currentEffect(): EffectWithSource | undefined {
         return this.effects.find((e) => e.name === this.state.effect);
     }
 }

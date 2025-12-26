@@ -1,11 +1,12 @@
 import type { EffectInfo } from '@ravepi/shared-types';
-import { BaseEffect } from './types.js';
+import { BaseEffect } from '../effect-types.js';
 
 export class FireEffect extends BaseEffect {
     readonly info: EffectInfo = {
         name: 'fire',
         label: 'Fire',
         description: 'Realistic fire/flame simulation',
+        icon: '🔥',
         params: [
             {
                 name: 'cooling',
@@ -15,7 +16,7 @@ export class FireEffect extends BaseEffect {
                 min: 20,
                 max: 100,
                 step: 5,
-                description: 'How quickly flames cool down',
+                description: 'How quickly flames cool down'
             },
             {
                 name: 'sparking',
@@ -25,9 +26,9 @@ export class FireEffect extends BaseEffect {
                 min: 50,
                 max: 200,
                 step: 10,
-                description: 'Chance of new sparks',
-            },
-        ],
+                description: 'Chance of new sparks'
+            }
+        ]
     };
 
     private heat: number[] = [];
@@ -94,3 +95,5 @@ export class FireEffect extends BaseEffect {
         return this.rgbToInt(r, g, b);
     }
 }
+
+export default FireEffect;

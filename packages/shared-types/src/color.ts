@@ -51,7 +51,7 @@ export function hslToRgb(hsl: HslColor): RgbColor {
     return {
         r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
         g: Math.round(hue2rgb(p, q, h) * 255),
-        b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+        b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
     };
 }
 
@@ -88,7 +88,7 @@ export function rgbToHsl(rgb: RgbColor): HslColor {
     return {
         h: Math.round(h * 360),
         s: Math.round(s * 100),
-        l: Math.round(l * 100),
+        l: Math.round(l * 100)
     };
 }
 
@@ -102,6 +102,6 @@ export function intToRgb(color: number): RgbColor {
     return {
         r: (color >> 16) & 0xff,
         g: (color >> 8) & 0xff,
-        b: color & 0xff,
+        b: color & 0xff
     };
 }

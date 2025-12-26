@@ -9,7 +9,9 @@ import type {
     SetColorRequest,
     SetEffectRequest,
     SaveSceneRequest,
+    SaveEffectRequest,
     EffectParams,
+    EffectWithSource
 } from '@ravepi/shared-types';
 
 const API_BASE = '/api';
@@ -17,9 +19,9 @@ const API_BASE = '/api';
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${API_BASE}${endpoint}`, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
-        ...options,
+        ...options
     });
 
     if (!response.ok) {
@@ -54,7 +56,7 @@ export const api = {
     async setPower(on: boolean): Promise<ApiResponse> {
         return request<ApiResponse>('/power', {
             method: 'POST',
-            body: JSON.stringify({ on } satisfies SetPowerRequest),
+            body: JSON.stringify({ on } satisfies SetPowerRequest)
         });
     },
 
@@ -62,7 +64,7 @@ export const api = {
     async setBrightness(value: number): Promise<ApiResponse> {
         return request<ApiResponse>('/brightness', {
             method: 'POST',
-            body: JSON.stringify({ value } satisfies SetBrightnessRequest),
+            body: JSON.stringify({ value } satisfies SetBrightnessRequest)
         });
     },
 
@@ -70,7 +72,7 @@ export const api = {
     async setColor(r: number, g: number, b: number): Promise<ApiResponse> {
         return request<ApiResponse>('/color', {
             method: 'POST',
-            body: JSON.stringify({ r, g, b } satisfies SetColorRequest),
+            body: JSON.stringify({ r, g, b } satisfies SetColorRequest)
         });
     },
 
@@ -78,7 +80,7 @@ export const api = {
     async setEffect(name: string, params?: EffectParams): Promise<ApiResponse> {
         return request<ApiResponse>('/effect', {
             method: 'POST',
-            body: JSON.stringify({ name, params } satisfies SetEffectRequest),
+            body: JSON.stringify({ name, params } satisfies SetEffectRequest)
         });
     },
 
@@ -86,7 +88,7 @@ export const api = {
     async setEffectParams(params: EffectParams): Promise<ApiResponse> {
         return request<ApiResponse>('/effect/params', {
             method: 'PATCH',
-            body: JSON.stringify({ params }),
+            body: JSON.stringify({ params })
         });
     },
 
@@ -94,7 +96,7 @@ export const api = {
     async saveScene(name: string): Promise<ApiResponse> {
         return request<ApiResponse>('/scenes', {
             method: 'POST',
-            body: JSON.stringify({ name } satisfies SaveSceneRequest),
+            body: JSON.stringify({ name } satisfies SaveSceneRequest)
         });
     },
 
@@ -102,14 +104,22 @@ export const api = {
     async applyScene(id: string): Promise<ApiResponse> {
         return request<ApiResponse>('/scenes/apply', {
             method: 'POST',
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ id })
         });
     },
 
     /** Delete a scene */
     async deleteScene(id: string): Promise<ApiResponse> {
         return request<ApiResponse>(`/scenes/${id}`, {
-            method: 'DELETE',
+            method: 'DELETE'
         });
     },
+
+    /** Save effect source code */
+    async saveEffect(name: string, source: string): Promise<ApiResponse<EffectWithSource>> {
+        return request<ApiResponse<EffectWithSource>>(`/effects/${name}`, {
+            method: 'PUT',
+            body: JSON.stringify({ source } satisfies SaveEffectRequest)
+        });
+    }
 };

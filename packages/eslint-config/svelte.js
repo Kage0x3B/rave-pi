@@ -9,8 +9,8 @@ export default [
     {
         languageOptions: {
             globals: {
-                ...globals.browser,
-            },
-        },
-    },
+                ...globals.browser
+            }
+        }
+    }
 ];

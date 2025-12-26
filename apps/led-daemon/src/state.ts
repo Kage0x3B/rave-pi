@@ -9,7 +9,7 @@ const DEFAULT_STATE: LedState = {
     brightness: 255,
     color: { r: 255, g: 0, b: 100 }, // Rave pink
     effect: 'solid',
-    effectParams: {},
+    effectParams: {}
 };
 
 /** Persistent state with scenes */
@@ -61,7 +61,7 @@ export class StateManager {
             try {
                 const data: PersistedData = {
                     state: this._state,
-                    scenes: this._scenes,
+                    scenes: this._scenes
                 };
                 await writeFile(STATE_CONFIG.statePath, JSON.stringify(data, null, 2));
                 console.log('[State] Saved to disk');
@@ -108,21 +108,21 @@ export class StateManager {
         this.notifyAndSave();
     }
 
-    /** Update effect params only */
+    /** Update effect params only (merges with existing) */
     setEffectParams(params: EffectParams): void {
-        this._state.effectParams = { ...params };
+        this._state.effectParams = { ...this._state.effectParams, ...params };
         this.notifyAndSave();
     }
 
-    /** Save a scene */
-    saveScene(name: string): Scene {
+    /** Save a scene with optional sanitized params */
+    saveScene(name: string, sanitizedParams?: EffectParams): Scene {
         const scene: Scene = {
             id: crypto.randomUUID(),
             name,
             color: { ...this._state.color },
             brightness: this._state.brightness,
             effect: this._state.effect,
-            effectParams: { ...this._state.effectParams },
+            effectParams: sanitizedParams ? { ...sanitizedParams } : { ...this._state.effectParams }
         };
 
         // Replace if name exists, otherwise add

@@ -1,7 +1,7 @@
 import { LedController } from './led-controller.js';
 import { StateManager } from './state.js';
 import { RenderLoop } from './render-loop.js';
-import { EffectManager } from './effects/index.js';
+import { EffectManager } from './effect-manager.js';
 import { startServer } from './server.js';
 
 async function main() {
@@ -19,7 +19,7 @@ async function main() {
     await state.load();
     console.log('[Init] State Manager: loaded');
 
-    const effects = new EffectManager(controller.ledCount);
+    const effects = await EffectManager.create(controller.ledCount);
     console.log(`[Init] Effect Manager: ${effects.getEffects().length} effects available`);
 
     const renderLoop = new RenderLoop(controller);
@@ -28,7 +28,6 @@ async function main() {
     // Apply saved state
     const savedState = state.state;
     controller.brightness = savedState.brightness;
-    effects.setColor(savedState.color);
 
     // Set initial effect
     if (effects.setEffect(savedState.effect, savedState.effectParams)) {
@@ -56,7 +55,7 @@ async function main() {
         state,
         effects,
         renderLoop,
-        controller,
+        controller
     });
 
     console.log('\n[Init] Startup complete!');

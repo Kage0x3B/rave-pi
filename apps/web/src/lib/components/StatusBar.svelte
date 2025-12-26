@@ -14,9 +14,9 @@
 
 <nav class="flex items-center justify-between rounded-xl bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 px-4 py-3">
     <div class="flex items-center gap-2">
-        <span class="text-xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
+        <a href="/" class="text-xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
             RavePi
-        </span>
+        </a>
     </div>
     <div class="flex items-center gap-3">
         {#if ledStore.status}

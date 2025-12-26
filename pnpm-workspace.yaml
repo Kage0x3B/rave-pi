@@ -1,8 +1,8 @@
 packages:
-  - apps/*
-  - packages/*
+    - apps/*
+    - packages/*
 onlyBuiltDependencies:
-  - esbuild
-  - rpi-ws281x
+    - esbuild
+    - rpi-ws281x
 patchedDependencies:
-  rpi-ws281x: patches/rpi-ws281x.patch
+    rpi-ws281x: patches/rpi-ws281x.patch
